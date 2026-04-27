@@ -4,7 +4,7 @@ import { format } from "date-fns";
 
 const Header = () => {
   return (
-    <div className="py-12 text-center">
+    <div className="pt-12 pb-6 text-center">
       <Image
         src={logo}
         width={470}
