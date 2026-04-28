@@ -3,15 +3,6 @@ import "./globals.css";
 import Header from "@/components/shared/Header";
 import Navbar from "@/components/shared/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const poppins = Poppins({
   variable:"--font-poppins",
@@ -29,10 +20,11 @@ export default function RootLayout({ children }) {
     <html
       data-theme="light"
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${poppins.variable} h-full antialiased`}
     >
       <body className={`${poppins.variable} min-h-full flex flex-col`}>
-        {children}</body>
+        {children}
+      </body>
     </html>
   );
 }
