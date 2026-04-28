@@ -1,4 +1,5 @@
 import LeftSideBar from "@/components/homepage/category/LeftSideBar";
+import NewsCard from "@/components/homepage/category/NewsCard";
 import RightSideBar from "@/components/homepage/category/RightSideBar";
 import { getCategories, getNewsByCategories } from "@/lib/data";
 import Link from "next/link";
@@ -24,9 +25,8 @@ const NewsCategoryPage = async ({ params }) => {
         <h2 className="font-bold text-xl"> News By Category</h2>
         {news.length > 0 ? (
           news.map((n) => (
-            <h2 className="p-6 rounded-md border" key={n._id}>
-              {n.title}
-            </h2>
+            <NewsCard key={n._id} news={n}>
+            </NewsCard>
           ))
         ) : (
           <div className="flex flex-col items-center justify-center text-center py-20 px-6">
