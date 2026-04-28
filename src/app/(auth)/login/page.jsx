@@ -12,11 +12,16 @@ import {
 } from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
-    const [isVisible, setIsVisible] = useState(false);
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const [isVisible, setIsVisible] = useState(false);
+
+  const {register, handleSubmit} = useForm();
+
+  const onSubmit = (data) => {
+    // e.preventDefault();
+    console.log(data,"data")
   };
   return (
     <div className="min-h-[calc(100vh-80px)] bg-[#f2f2f2] flex items-center justify-center px-4">
@@ -24,7 +29,10 @@ const LoginPage = () => {
         <h2 className="font-bold text-xl text-center text-[#403f3f] pb-7 mb-7 border-b border-[#e7e7e7]">
           Login Your Account
         </h2>
-        <Form className="flex w-full flex-col gap-4" onSubmit={onSubmit}>
+        <Form
+          className="flex w-full flex-col gap-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {/* email */}
           <TextField
             isRequired
@@ -37,8 +45,8 @@ const LoginPage = () => {
               return null;
             }}
           >
-            <Label className="text-xl">Email Address</Label>
-            <Input name="email" placeholder="john@example.com" />
+            <Label className="text-lg">Email Address</Label>
+            <Input {...register("email")} placeholder="john@example.com" />
             <FieldError />
           </TextField>
 
@@ -60,13 +68,13 @@ const LoginPage = () => {
               return null;
             }}
           >
-            <Label>Password</Label>
+            <Label className="text-lg">Password</Label>
             <InputGroup>
               <InputGroup.Input
                 className="w-full "
                 type={isVisible ? "text" : "password"}
                 placeholder="Enter Your Password"
-                name="password"
+                {...register("password")}
               />
               <InputGroup.Suffix className="pr-0">
                 <Button
