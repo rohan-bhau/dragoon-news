@@ -1,3 +1,7 @@
+
+export const metadata = {
+  title: "Dragon News | career",
+};
 export default function CareersPage() {
   const jobs = [
     {

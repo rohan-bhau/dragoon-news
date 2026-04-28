@@ -1,5 +1,9 @@
 import React from 'react'
 
+export const metadata = {
+  title: "Dragon News | about-us",
+};
+
 const AboutUsPAge = () => {
   return (
     <main className="bg-white text-gray-800">

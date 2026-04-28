@@ -5,12 +5,23 @@ import React from "react";
 import { FaEye, FaStar } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
 
+export const generateMetadata = async ({ params }) => {
+   const { newsId } = await params;
+  console.log(newsId);
+  const news = await getNewsDetailsById(newsId);
+
+  return {
+    title: news.title,
+    description: news.details,
+  };
+};
+
 const NewsDetailsPage = async ({ params }) => {
   const { newsId } = await params;
-  console.log(newsId, "paramsRes");
+  // console.log(newsId, "paramsRes");
 
   const news = await getNewsDetailsById(newsId);
-  console.log(news);
+  // console.log(news);
   return (
     <div className="container mx-auto">
       <h2 className="text-xl font-bold text-[#403f3f] mb-5">Dragon News</h2>
