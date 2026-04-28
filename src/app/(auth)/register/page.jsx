@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-clinet";
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
 import {
   Button,
@@ -23,9 +24,25 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    // e.preventDefault();
-    console.log(data,"data")
+  const onSubmit =async (data) => {
+    console.log(data, "data")
+    const { name, password, img, email, terms_and_conditions} = data;
+    
+    const { data:res, error } = await authClient.signUp.email({
+      name: name, // required
+      email: email, // required
+      password: password, // required
+      image: img,
+      callbackURL: "/",
+    });
+    console.log(res, error)
+
+    if (error) {
+      alert(error.message)
+    }
+    if (res) {
+      alert("Sign Up Successfull, Please check your email to verify your account")
+    }
   };
   return (
     <div className="min-h-[calc(100vh-80px)] bg-[#f2f2f2] flex items-center justify-center px-4">
@@ -54,22 +71,9 @@ const RegisterPage = () => {
           </TextField>
 
           {/* photo url */}
-          <TextField
-            isRequired
-            name="photo_url"
-            validate={(value) => {
-              if (!value.includes("https://")) {
-                return "Enter a valid photo url";
-              }
-              return null;
-            }}
-          >
+          <TextField name="img">
             <Label className="text-lg">Photo Url</Label>
-            <Input
-              {...register("photo_url")}
-              placeholder="Enter Your Photo Url"
-            />
-            <FieldError />
+            <Input {...register("img")} placeholder="Enter Your Photo Url" />
           </TextField>
 
           {/* email */}
@@ -138,12 +142,7 @@ const RegisterPage = () => {
           </TextField>
 
           {/* terms and conditions */}
-          <Checkbox
-            {...register("terms_ands_conditions", {
-              required: "You must accept terms & conditions",
-            })}
-            id="basic-terms"
-          >
+          <Checkbox isRequired id="basic-terms">
             <Checkbox.Control>
               <Checkbox.Indicator />
             </Checkbox.Control>
@@ -152,19 +151,18 @@ const RegisterPage = () => {
             </Checkbox.Content>
             <FieldError />
           </Checkbox>
-          {errors.terms_ands_conditions && (
-            <p className="text-red-500 text-sm">
-              {errors.terms_ands_conditions.message}
-            </p>
-          )}
 
           {/* submit and reset button */}
           <div className="flex justify-center gap-2">
-            <Button type="submit">
+            <Button className="w-40 py-4 text-lg" type="submit">
               <Check />
-              Submit
+              Register
             </Button>
-            <Button type="reset" variant="secondary">
+            <Button
+              className="w-40 py-4 text-lg"
+              type="reset"
+              variant="secondary"
+            >
               Reset
             </Button>
           </div>

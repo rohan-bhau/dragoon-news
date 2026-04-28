@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-clinet";
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
 import {
   Button,
@@ -19,9 +20,23 @@ const LoginPage = () => {
 
   const {register, handleSubmit} = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     // e.preventDefault();
-    console.log(data,"data")
+    console.log(data, "data")
+    const { data:res, error } = await authClient.signIn.email({
+      email: data.email, // required
+    password: data.password, // required
+    rememberMe: true,
+      callbackURL: "/",
+    
+    });
+    if(error) {
+      alert(error.message)
+    }
+
+    if(res) {
+      alert(`Welcome back! ${res.user.name}`)
+    }
   };
   return (
     <div className="min-h-[calc(100vh-80px)] bg-[#f2f2f2] flex items-center justify-center px-4">
@@ -100,11 +115,15 @@ const LoginPage = () => {
 
           {/* submit and reset button */}
           <div className="flex justify-center gap-2">
-            <Button type="submit">
+            <Button className="w-40 py-4 text-lg" type="submit">
               <Check />
-              Submit
+              Login
             </Button>
-            <Button type="reset" variant="secondary">
+            <Button
+              className="w-40 py-4 text-lg"
+              type="reset"
+              variant="secondary"
+            >
               Reset
             </Button>
           </div>
