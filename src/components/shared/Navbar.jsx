@@ -8,7 +8,7 @@ import { authClient } from '@/lib/auth-clinet';
 const Navbar = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user
-  console.log(user)
+  // console.log(user)
 
   return (
     <div className="flex justify-between container mx-auto mt-5 mb-5">
@@ -33,6 +33,7 @@ const Navbar = () => {
               alt="user Avatar"
               width={40}
               height={40}
+              className='rounded-full'
             />
             <button onClick={async()=>await authClient.signOut()} className="btn btn-error  text-[#FFFFFF]">Logout</button>
           </div>
